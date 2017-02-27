@@ -6,8 +6,9 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Services\OrderService;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use CodeDelivery\Http\Requests;
 
 class ClientCheckoutController extends Controller
 {
@@ -32,8 +33,9 @@ class ClientCheckoutController extends Controller
         return $orders;
     }
 
-    public function store(Request $request)
+    public function store(Requests\CheckoutRequest $request)
     {
+        dd($request);
         $data = $request->all();
         $id = Authorizer::getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
