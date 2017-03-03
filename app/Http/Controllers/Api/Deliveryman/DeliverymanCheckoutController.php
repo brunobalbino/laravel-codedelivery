@@ -11,6 +11,8 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class DeliverymanCheckoutController extends Controller
 {
+    private $with = ['client', 'cupom', 'items'];
+
     public function __construct(
                                 OrderRepository $repository,
                                 UserRepository $userRepository,
@@ -24,7 +26,7 @@ class DeliverymanCheckoutController extends Controller
     public function index()
     {
         $id = Authorizer::getResourceOwnerId();
-        $orders = $this->repository->with(['items'])->scopeQuery(function($query) use($id) {
+        $orders = $this->repository->with($this->with)->scopeQuery(function($query) use($id) {
            return $query->where('user_deliveryman_id','=',$id);
         })->paginate();
 
